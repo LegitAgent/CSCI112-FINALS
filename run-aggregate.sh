@@ -13,7 +13,7 @@ if [[ ! -f .env.local ]]; then
   exit 1
 fi
 
-# read through file, must be in that order
+# Read KEY=value entries without executing the file their order does not matter
 while IFS= read -r line || [[ -n "$line" ]]; do
   line="${line%$'\r'}"
 
@@ -21,6 +21,7 @@ while IFS= read -r line || [[ -n "$line" ]]; do
     MONGODB_HOST=*) MONGODB_HOST="${line#*=}" ;;
     MONGODB_DATABASE=*) MONGODB_DATABASE="${line#*=}" ;;
     MONGODB_USERNAME=*) MONGODB_USERNAME="${line#*=}" ;;
+    MONGODB_PASSWORD=*) MONGODB_PASSWORD="${line#*=}" ;;
   esac
 done < .env.local
 
@@ -28,10 +29,12 @@ done < .env.local
 : "${MONGODB_HOST:?Missing MONGODB_HOST}"
 : "${MONGODB_DATABASE:?Missing MONGODB_DATABASE}"
 : "${MONGODB_USERNAME:?Missing MONGODB_USERNAME}"
+: "${MONGODB_PASSWORD:?Missing MONGODB_PASSWORD}"
 
 # run query file with sh
 mongosh "mongodb+srv://${MONGODB_HOST}/${MONGODB_DATABASE}" \
   --apiVersion 1 \
   --username "$MONGODB_USERNAME" \
+  --password "$MONGODB_PASSWORD" \
   --authenticationDatabase admin \
   --file queries/part-e-aggregate.js
