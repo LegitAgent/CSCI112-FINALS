@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# run this with bash <filename>.sh
+# run this with bash <filename>.sh if windows
 # run this in either git bash or in a bash terminal directly
 # make sure you have mongosh installed
 set -euo pipefail # return errors
