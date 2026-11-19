@@ -54,5 +54,5 @@ db.dorm.deleteOne({
   identifyingField: value
 })
 
-// for printing to terminal, just do printJson
+// for printing to terminal, just do printjson
 // simply do a wrapper
