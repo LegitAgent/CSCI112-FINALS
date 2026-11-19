@@ -33,7 +33,7 @@ If using any Linux based CLI, execute with the ff:
 ./myshellscript.sh
 ```
 
- Make sure to have mongosh installed there, or if you really want to use windows native (i.e. PW or CMD), just use the sample script below:
+Make sure to have mongosh installed there, or if you really want to use windows native (i.e. PW or CMD), just use the sample script below:
 
 
 ```bash
