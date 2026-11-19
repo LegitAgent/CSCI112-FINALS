@@ -7,7 +7,7 @@
 //      Use $project to shape output fields
 //      Use $limit or other stages as appropriate
 //      Pipelines must answer strategic business questions
-//      Example Aggregation Types (adapt to your domain):
+// Example Aggregation Types (adapt to your domain):
 //      Count occurrences by category
 //      Calculate totals, averages, or other statistics
 //      Identify top/bottom performers
@@ -20,36 +20,30 @@
 //      Description of how company would use this insight
 
 // Setup: run before the numbered demonstrations.
-var dorm = db.getSiblingDB('csci112_finals');
+load("queries/consts.js");
 
-// some sample syntax
-// CREATE
-db.dorm.insertOne({
-  field: value,
-  anotherField: value
-})
+// 1. dorm buildings that have the greatest total room capacity
+printjson(
+  rooms.aggregate([
+    // get all rooms greater than 0
+    { $match: { room_capacity: { $gt: 0} } },
+    
+    // group them by their building
+    { $group: {
+        _id: "$dorm_name",
+        total: { $sum: "$room_capacity" }
+      }
+    },
 
-// READ
-db.dorm.find({
-  field: { $gte: value }
-})
+    // sort by descending
+    { $sort: { total: -1 } },
 
-// UPDATE a field
-db.dorm.updateOne(
-  { identifyingField: value },
-  { $set: { fieldToChange: newValue } }
+    // hide _id and out bldg name under buildings
+    { $project: {
+        _id: 0,
+        building: "$_id",
+        total_capacity: "$total"
+      }
+    }
+  ]).toArray()
 )
-
-// UPDATE an array
-db.dorm.updateOne(
-  { identifyingField: value },
-  { $addToSet: { arrayField: newItem } }
-)
-
-// DELETE
-db.dorm.deleteOne({
-  identifyingField: value
-})
-
-// for printing to terminal, just do printJson
-// simply do a wrapper

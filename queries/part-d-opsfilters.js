@@ -8,7 +8,7 @@
 //      Combine multiple conditions in single queries
 //      Sort and limit results appropriately
 //      Queries must answer real business questions from your problem domain
-//      Example Query Types (adapt to your domain):
+// Example Query Types (adapt to your domain):
 //      Filter by exact values
 //      Filter by numeric ranges (greater than, less than)
 //      Filter by date ranges
